@@ -1,6 +1,8 @@
 package net.htlgkr.handler;
 
-public class Node {
+import java.util.Comparator;
+
+public class Node implements Comparable {
 
     private String nodeID;
     private String nodeLabel;
@@ -27,5 +29,18 @@ public class Node {
 
     public void setNodeLabel(String nodeLabel) {
         this.nodeLabel = nodeLabel;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+
+
+        Node n1 = (Node) o;
+        /*String[] split1 = getNodeID().split("n");
+        String[] split2 = n1.getNodeID().split("n");
+
+
+        return Integer.parseInt(split1[split1.length-1])-Integer.parseInt(split2[split2.length-1]);*/
+        return Integer.parseInt(nodeID)-Integer.parseInt(n1.nodeID);
     }
 }

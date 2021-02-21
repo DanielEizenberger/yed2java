@@ -1,6 +1,6 @@
 package net.htlgkr.handler;
 
-public class Edge {
+public class Edge implements Comparable{
 
     private String edgeID;
     private String sourceID;
@@ -47,5 +47,17 @@ public class Edge {
 
     public void setPath(Path path) {
         this.path = path;
+    }
+
+
+    public int compareTo(Object o) {
+
+
+        Edge e1 = (Edge) o;
+        String[] split1 = getEdgeID().split("e");
+        String[] split2 = e1.getEdgeID().split("e");
+
+
+        return Integer.parseInt(split1[split1.length-1])-Integer.parseInt(split2[split2.length-1]);
     }
 }

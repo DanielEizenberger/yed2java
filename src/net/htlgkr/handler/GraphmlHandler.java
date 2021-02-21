@@ -7,6 +7,7 @@ import org.xml.sax.helpers.DefaultHandler;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 public class GraphmlHandler extends DefaultHandler {
 
@@ -15,8 +16,8 @@ public class GraphmlHandler extends DefaultHandler {
     private static final String EDGE = "edge";
     private static final String PATH = "y:Path";
     private static final String POINT = "y:Point";
-    private Set<Node> nodes = new HashSet<>();
-    private Set<Edge> edges = new HashSet<>();
+    private Set<Node> nodes = new TreeSet<>();
+    private Set<Edge> edges = new TreeSet<>();
     private String elementValue;
 
     private String currentNodeID = "";
@@ -47,7 +48,8 @@ public class GraphmlHandler extends DefaultHandler {
     public void startElement(String uri, String lName, String qName, Attributes attr) throws SAXException {
         switch (qName) {
             case NODE:
-                currentNodeID = attr.getValue(0);
+                String[] temp = attr.getValue(0).split("n");
+                currentNodeID = temp[temp.length-1];
                 break;
             case NODELABEL:
                 label = true;
@@ -56,8 +58,11 @@ public class GraphmlHandler extends DefaultHandler {
                 edge = true;
 
                 currentEdgeID = attr.getValue(0);
-                currentEdgeSourceID = attr.getValue(1);
-                currentEdgeTargetID = attr.getValue(2);
+
+                String[] temp1 =attr.getValue(1).split("n");
+                currentEdgeSourceID = temp1[temp1.length-1];
+                String[] temp2 = attr.getValue(2).split("n");
+                currentEdgeTargetID = temp2[temp2.length-1];
                 break;
             case PATH:
                 currentPath = new Path();

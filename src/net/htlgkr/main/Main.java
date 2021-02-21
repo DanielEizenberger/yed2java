@@ -9,6 +9,8 @@ public class Main {
     public static void main(String[] args) {
         ReadyEdFile readFile = new ReadyEdFile("ElectionUtilBasic.graphml");
 
+
+        CodeWriter.writeToJava(readFile);
         testing(readFile);
     }
 

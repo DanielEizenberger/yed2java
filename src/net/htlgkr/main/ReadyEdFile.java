@@ -11,15 +11,19 @@ import javax.xml.parsers.SAXParserFactory;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.Set;
+import java.util.TreeSet;
 
 public class ReadyEdFile {
 
     private Set<Node> nodes;
     private Set<Edge> edges;
+    private String path;
 
     public ReadyEdFile(String path) {
         readXMLFile(path);
+        this.path = path;
     }
 
     private void readXMLFile(String path) {
@@ -34,6 +38,7 @@ public class ReadyEdFile {
             saxParser.parse(file, handler);
 
             nodes = handler.getNodes();
+            //nodes.stream().sorted((x,y)-> Integer.compare(Integer.parseInt(x.getNodeID().substring(5)),Integer.parseInt(y.getNodeID().substring(5))));
             edges = handler.getEdges();
 
         } catch (FileNotFoundException e) {
@@ -54,4 +59,6 @@ public class ReadyEdFile {
     public Set<Edge> getEdges() {
         return edges;
     }
+
+    public String getPath() { return path.split("\\.")[0];}
 }
