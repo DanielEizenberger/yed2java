@@ -79,8 +79,33 @@ public class GraphmlHandler extends DefaultHandler {
     }
 
     private void fuerFortnite(){
-        for(Edge e : edges){
+        Node temp = nodes.stream().filter(x->x.getNodeID().equals("n1")).findFirst().get();
+        Stack<Node> x = new Stack<>();
+        String nextTarget ="";
+        boolean whielthing = true;
+        while(whielthing){
+            for(Edge e : edges){
+                if(e.getSourceID().equals(temp.getNodeID())){
+                    e.setDone(true);
+                    nextTarget= nodes.stream().filter(x2->x2.getNodeID().equals(e.getTargetID())).findFirst().get().getNodeID();
+                }
+            }
+            String finalNextTarget = nextTarget;
 
+            temp = nodes.stream().filter(y->y.getNodeID().equals(finalNextTarget)).findFirst().get();
+            x.add(temp);
+            whielthing = false;
+            for(Edge e1 : edges){
+
+                if (!e1.isDone()) {
+                    whielthing = true;
+                    break;
+                }
+            }
+        }
+
+        for(Node n : x ){
+            System.out.println(n.getNodeLabel());
         }
     }
 

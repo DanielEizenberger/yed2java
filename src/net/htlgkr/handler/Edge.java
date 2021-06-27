@@ -6,7 +6,7 @@ public class Edge implements Comparable{
     private String sourceID;
     private String targetID;
     private Path path;
-
+    private boolean done = false;
     public Edge() {
     }
 
@@ -27,6 +27,14 @@ public class Edge implements Comparable{
 
     public String getSourceID() {
         return sourceID;
+    }
+
+    public boolean isDone() {
+        return done;
+    }
+
+    public void setDone(boolean done) {
+        this.done = done;
     }
 
     public void setSourceID(String sourceID) {

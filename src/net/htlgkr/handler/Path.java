@@ -3,7 +3,7 @@ package net.htlgkr.handler;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Path {
+public class  Path {
 
     private List<Point> points = new ArrayList<>();
 
