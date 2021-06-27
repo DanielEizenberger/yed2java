@@ -85,7 +85,7 @@ public class GraphmlHandler extends DefaultHandler {
         boolean whielthing = true;
         while(whielthing){
             for(Edge e : edges){
-                if(e.getSourceID().equals(temp.getNodeID())){
+                if(!e.isDone() && e.getSourceID().equals(temp.getNodeID())){
                     e.setDone(true);
                     nextTarget= nodes.stream().filter(x2->x2.getNodeID().equals(e.getTargetID())).findFirst().get().getNodeID();
                 }
