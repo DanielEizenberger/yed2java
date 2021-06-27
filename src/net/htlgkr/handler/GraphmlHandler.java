@@ -13,8 +13,8 @@ public class GraphmlHandler extends DefaultHandler {
     private static final String EDGE = "edge";
     private static final String PATH = "y:Path";
     private static final String POINT = "y:Point";
-    private Set<Node> nodes = new TreeSet<>();
-    private Set<Edge> edges = new TreeSet<>();
+    private Set<Node> nodes = new HashSet<>();
+    private Set<Edge> edges = new HashSet<>();
     private String elementValue;
 
     private String currentNodeID = "";
@@ -46,7 +46,8 @@ public class GraphmlHandler extends DefaultHandler {
     @Override
     public void endDocument() throws SAXException {
         debug();
-        sortNodes();
+        //sortNodes();
+        fuerFortnite();
 
         System.out.println("DEBUG: Reading document stopped!"); // For debug purposes
     }
@@ -55,7 +56,7 @@ public class GraphmlHandler extends DefaultHandler {
         debug.sort(new Comparator<String>() {
             @Override
             public int compare(String o1, String o2) {
-                return Integer.parseInt(o1.split(" ")[0]) - Integer.parseInt(o2.split(" ")[0]);
+                return o1.compareTo(o2);
             }
         });
 
@@ -74,6 +75,12 @@ public class GraphmlHandler extends DefaultHandler {
 
         for(String s : debug){
             System.out.println(s);
+        }
+    }
+
+    private void fuerFortnite(){
+        for(Edge e : edges){
+
         }
     }
 
@@ -107,24 +114,18 @@ public class GraphmlHandler extends DefaultHandler {
     public void startElement(String uri, String lName, String qName, Attributes attr) throws SAXException {
         switch (qName) {
             case NODE:
-                String[] temp = attr.getValue(0).split("n");
-                currentNodeID = temp[temp.length-1];
-
-                if(attr.getValue(0).equals("n0")) currentNodeID = "-1";
-                System.out.println(attr.getValue(0) + " | " + currentNodeID);
+                currentNodeID = attr.getValue(0);
                 break;
             case NODELABEL:
                 label = true;
                 break;
             case EDGE:
                 edge = true;
-
                 currentEdgeID = attr.getValue(0);
+                currentEdgeSourceID = attr.getValue(1);
+                currentEdgeTargetID = attr.getValue(2);
 
-                String[] temp1 =attr.getValue(1).split("n");
-                currentEdgeSourceID = temp1[temp1.length-1];
-                String[] temp2 = attr.getValue(2).split("n");
-                currentEdgeTargetID = temp2[temp2.length-1];
+                System.out.println(attr.getValue(0) + " | " + attr.getValue(1) + " | " + attr.getValue(2));
 
                 debug.add(currentEdgeSourceID + " -> " + currentEdgeTargetID + " | " + attr.getValue(0));
                 break;
@@ -147,7 +148,7 @@ public class GraphmlHandler extends DefaultHandler {
     @Override
     public void endElement(String uri, String localName, String qName) throws SAXException {
         if (elementValue != null) {
-            if (label) {
+            if (label && !elementValue.equals("")) {
                 nodes.add(new Node(currentNodeID, elementValue));
                 elementValue = null;
                 label = false;

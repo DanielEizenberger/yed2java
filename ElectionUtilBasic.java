@@ -1,29 +1,33 @@
-public class ElectionUtilBasic {
-public static String evaluate(String[] votes)
-HashMap<String, Integer> candidates;
-candidates.put(vote, 1);
-}
-candidates.put(s, candidates.get(vote) + 1);
-}
-for (String vote : votes){
-if (candidates.get(vote) != null){
-for (Map.Entry<String, Integer> candidate : candidates.entrySet()){
-Map.Entry<String, Integer> winner = null;
-if (votes.length != 0){
-String result = "none";
-return result;
-candidates = new HashMap<>();
+import java.util.HashMap;
+import java.util.Map;
+public final class ElectionUtilBasic {
+String
 if (winner != null){
 winner = candidate;
 }
-if (candidate.getValue()> winner.getValue()){
+result = "draw";
+candidates = new HashMap<>();
+HashMap<String, Integer> candidates;
+return result;
+if (candidate.getValue().equals(winner.getValue())){
+for (String vote : votes){
+for (Map.Entry<String, Integer> candidate : candidates.entrySet()){
+String result = "none";
+String[] votes
+candidates.put(s, candidates.get(vote) + 1);
+}
 winner = candidate;
 }
+candidates.put(vote, 1);
+}
+if (votes.length != 0){
 result = winner.getKey();
-for (Map.Entry<String, Integer> candidate : candidates.entrySet()){
+if (candidate.getValue()> winner.getValue()){
 if (!candidate.equals(winner)){
-result = "draw";
+if (candidates.get(vote) != null){
+public static String evaluate(String[] votes)
+for (Map.Entry<String, Integer> candidate : candidates.entrySet()){
 break;
 }
-if (candidate.getValue().equals(winner.getValue())){
+Map.Entry<String, Integer> winner = null;
 }}

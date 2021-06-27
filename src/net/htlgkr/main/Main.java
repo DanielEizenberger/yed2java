@@ -26,6 +26,7 @@ public class Main {
         for (Node n : ryf.getNodes()) {
             System.out.println("Node ID: " + n.getNodeID() + " | Node Label: " + n.getNodeLabel());
         }
+        System.out.println("Node Size: " +ryf.getNodes().size());
 
         System.out.println("\nEdges:\n");
 
@@ -41,6 +42,7 @@ public class Main {
                 }
             }
         }
+        System.out.println("Edge Size: " +ryf.getEdges().size());
 
         System.out.println("----------TESTING END----------");
     }

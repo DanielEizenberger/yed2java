@@ -33,14 +33,7 @@ public class Node implements Comparable {
 
     @Override
     public int compareTo(Object o) {
-
-
         Node n1 = (Node) o;
-        /*String[] split1 = getNodeID().split("n");
-        String[] split2 = n1.getNodeID().split("n");
-
-
-        return Integer.parseInt(split1[split1.length-1])-Integer.parseInt(split2[split2.length-1]);*/
-        return Integer.parseInt(nodeID)-Integer.parseInt(n1.nodeID);
+        return nodeID.compareTo(n1.getNodeID());
     }
 }

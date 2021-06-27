@@ -18,7 +18,9 @@ public class CodeWriter {
             f.createNewFile();
 
             BufferedWriter bw = new BufferedWriter(new FileWriter(f));
-            bw.write("public class "+yedName+" {");
+            bw.write("import java.util.HashMap;\n" +
+                         "import java.util.Map;\n");
+            bw.write("public final class "+yedName+" {");
             bw.newLine();
 
             for (Node n : nodes) {
