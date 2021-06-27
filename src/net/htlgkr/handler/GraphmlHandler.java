@@ -13,6 +13,7 @@ public class GraphmlHandler extends DefaultHandler {
     private static final String EDGE = "edge";
     private static final String PATH = "y:Path";
     private static final String POINT = "y:Point";
+    private static final String ARROWS = "y:Arrows";
     private Set<Node> nodes = new HashSet<>();
     private Set<Edge> edges = new HashSet<>();
     private String elementValue;
@@ -166,6 +167,9 @@ public class GraphmlHandler extends DefaultHandler {
                 points.add(p);
 
                 currentPath.setPoints(points);
+            case ARROWS:
+                attr.getValue(1);
+                
                 break;
         }
     }
