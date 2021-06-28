@@ -70,14 +70,27 @@ public class GraphmlHandler extends DefaultHandler {
         Stack<Edge> edgeStack = new Stack<>();
         String nextTarget ="";
         boolean whielthing = true;
-        while(whielthing){
+        boolean stuff = false;
+        while(whielthing && !nextTarget.equals("n0::n9")){
             for(Edge e : edges){
                 if(!e.isDone() && e.getSourceID().equals(temp.getNodeID())){
-                    System.out.println(e.getEdgeID());
-                    e.setDone(true);
-                    nextTarget= nodes.stream().filter(x2->x2.getNodeID().equals(e.getTargetID())).findFirst().get().getNodeID();
+                    if(!e.getArrowSource().equals("none") && !edgeStack.contains(e)){
+                        edgeStack.push(e);
+                        stuff=false;
+                    }else{
+                        e.setDone(true);
+                        Optional<Node> nodeTempThingwtf = nodes.stream().filter(x2->x2.getNodeID().equals(e.getTargetID())).findFirst();
+                        if(nodeTempThingwtf.isPresent()){
+                            nextTarget= nodeTempThingwtf.get().getNodeID();
+                            stuff= true;
+                            break;
+                        }
+                    }
+                    //System.out.println(e.getEdgeID());
 
-                    if(!e.getArrowSource().equals("none")) {
+
+
+                    /*if(!e.getArrowSource().equals("none")) {
                         for (Edge e1 : edges) {
                             if (e1.getEdgeID() != e.getEdgeID() &&
                                     e1.getTargetID().equals(e.getTargetID())) {
@@ -85,13 +98,25 @@ public class GraphmlHandler extends DefaultHandler {
                                 System.out.println("EDGE STACK: " + e1.getEdgeID());
                             }
                         }
-                    }
+                    }*/
+                }
+                else if(e.isDone() && e.getSourceID().equals(temp.getNodeID())){
+
                 }
             }
             String finalNextTarget = nextTarget;
+            //System.out.println(nextTarget);
+            if(stuff){
 
-            temp = nodes.stream().filter(y->y.getNodeID().equals(finalNextTarget)).findFirst().get();
-            nodeStack.add(temp);
+                temp = nodes.stream().filter(y->y.getNodeID().equals(finalNextTarget)).findFirst().get();
+                if(!nodeStack.contains(temp))nodeStack.add(temp);
+
+                stuff = false;
+            }
+            else if(edgeStack.size()>1){
+                nextTarget = nodes.stream().filter(x2->x2.getNodeID().equals(edgeStack.pop().getTargetID())).findFirst().get().getNodeID();
+            }
+
             whielthing = false;
             for(Edge e1 : edges){
 
@@ -101,7 +126,8 @@ public class GraphmlHandler extends DefaultHandler {
                 }
             }
         }
-
+        Node temp2 = nodes.stream().filter(y->y.getNodeID().equals("n0::n9")).findFirst().get();
+        nodeStack.push(temp2);
         for(Node n : nodeStack ){
             System.out.println(n.getNodeLabel());
         }
