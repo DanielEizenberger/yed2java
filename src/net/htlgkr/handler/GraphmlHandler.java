@@ -54,27 +54,44 @@ public class GraphmlHandler extends DefaultHandler {
     }
 
     private void debug(){
+        System.out.println("\nSTART DEBUG");
+        for (String s : debug){
+            System.out.println(s);
+        }
         for(Edge e : edges){
             System.out.println(e.getEdgeID() + " | " + e.getArrowSource());
         }
+        System.out.println("STOP DEBUG\n");
     }
 
     private void fuerFortnite(){
         Node temp = nodes.stream().filter(x->x.getNodeID().equals("n1")).findFirst().get();
-        Stack<Node> x = new Stack<>();
+        Stack<Node> nodeStack = new Stack<>();
+        Stack<Edge> edgeStack = new Stack<>();
         String nextTarget ="";
         boolean whielthing = true;
         while(whielthing){
             for(Edge e : edges){
                 if(!e.isDone() && e.getSourceID().equals(temp.getNodeID())){
+                    System.out.println(e.getEdgeID());
                     e.setDone(true);
                     nextTarget= nodes.stream().filter(x2->x2.getNodeID().equals(e.getTargetID())).findFirst().get().getNodeID();
+
+                    if(!e.getArrowSource().equals("none")) {
+                        for (Edge e1 : edges) {
+                            if (e1.getEdgeID() != e.getEdgeID() &&
+                                    e1.getTargetID().equals(e.getTargetID())) {
+                                edgeStack.push(e1);
+                                System.out.println("EDGE STACK: " + e1.getEdgeID());
+                            }
+                        }
+                    }
                 }
             }
             String finalNextTarget = nextTarget;
 
             temp = nodes.stream().filter(y->y.getNodeID().equals(finalNextTarget)).findFirst().get();
-            x.add(temp);
+            nodeStack.add(temp);
             whielthing = false;
             for(Edge e1 : edges){
 
@@ -85,7 +102,7 @@ public class GraphmlHandler extends DefaultHandler {
             }
         }
 
-        for(Node n : x ){
+        for(Node n : nodeStack ){
             System.out.println(n.getNodeLabel());
         }
     }
