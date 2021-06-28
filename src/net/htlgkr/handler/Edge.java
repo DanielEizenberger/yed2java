@@ -5,15 +5,17 @@ public class Edge implements Comparable{
     private String edgeID;
     private String sourceID;
     private String targetID;
+    private String arrowSource;
     private Path path;
     private boolean done = false;
     public Edge() {
     }
 
-    public Edge(String edgeID, String sourceID, String targetID, Path path) {
+    public Edge(String edgeID, String sourceID, String targetID, String arrowSource, Path path) {
         this.edgeID = edgeID;
         this.sourceID = sourceID;
         this.targetID = targetID;
+        this.arrowSource = arrowSource;
         this.path = path;
     }
 
@@ -57,6 +59,13 @@ public class Edge implements Comparable{
         this.path = path;
     }
 
+    public String getArrowSource() {
+        return arrowSource;
+    }
+
+    public void setArrowSource(String arrowSource) {
+        this.arrowSource = arrowSource;
+    }
 
     public int compareTo(Object o) {
 
