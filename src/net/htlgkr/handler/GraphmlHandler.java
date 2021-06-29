@@ -71,6 +71,8 @@ public class GraphmlHandler extends DefaultHandler {
         String nextTarget ="";
         boolean whielthing = true;
         boolean stuff = false;
+
+        boolean warum = true;
         while(whielthing && !nextTarget.equals("n0::n9")){
             for(Edge e : edges){
                 if(!e.isDone() && e.getSourceID().equals(temp.getNodeID())){
@@ -82,14 +84,13 @@ public class GraphmlHandler extends DefaultHandler {
                         Optional<Node> nodeTempThingwtf = nodes.stream().filter(x2->x2.getNodeID().equals(e.getTargetID())).findFirst();
                         if(nodeTempThingwtf.isPresent()){
                             nextTarget= nodeTempThingwtf.get().getNodeID();
+                            warum = false;
                             stuff= true;
                             break;
                         }
                     }
                     //System.out.println(e.getEdgeID());
-
-
-
+                    
                     /*if(!e.getArrowSource().equals("none")) {
                         for (Edge e1 : edges) {
                             if (e1.getEdgeID() != e.getEdgeID() &&
@@ -100,21 +101,31 @@ public class GraphmlHandler extends DefaultHandler {
                         }
                     }*/
                 }
-                else if(e.isDone() && e.getSourceID().equals(temp.getNodeID())){
-
-                }
             }
             String finalNextTarget = nextTarget;
             //System.out.println(nextTarget);
             if(stuff){
 
                 temp = nodes.stream().filter(y->y.getNodeID().equals(finalNextTarget)).findFirst().get();
-                if(!nodeStack.contains(temp))nodeStack.add(temp);
+                if(!nodeStack.contains(temp)){
+
+                    if(temp.getNodeLabel().contains("if") || temp.getNodeLabel().contains("for")){
+                        temp.setNodeLabel(temp.getNodeLabel()+"{");
+                    }
+                    nodeStack.add(temp);
+                }
 
                 stuff = false;
             }
             else if(edgeStack.size()>1){
-                nextTarget = nodes.stream().filter(x2->x2.getNodeID().equals(edgeStack.pop().getTargetID())).findFirst().get().getNodeID();
+                nextTarget = nodes.stream().filter(x2->x2.getNodeID().equals(edgeStack.peek().getTargetID())).findFirst().get().getNodeID();
+                edgeStack.pop();
+                String finalNextTarget1 = nextTarget;
+                temp = nodes.stream().filter(y->y.getNodeID().equals(finalNextTarget1)).findFirst().get();
+                if(!nodeStack.contains(temp)) {
+                    temp.setNodeLabel(temp.getNodeLabel()+"}");
+                }
+                nodeStack.add(temp);
             }
 
             whielthing = false;
