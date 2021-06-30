@@ -6,6 +6,7 @@ import net.htlgkr.handler.Node;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class CodeWriter {
@@ -53,6 +54,8 @@ public class CodeWriter {
 
     public static void writeToJava(ReadyEdFile ryf){
         System.out.println("DEBUG: Start writeToJava()");
+        System.out.println("NODE SIZE: " + ryf.getNodes().size());
+        System.out.println("EDGE SIZE: " + ryf.getEdges().size());
 
         Set<Node> nodes = ryf.getNodes();
         Set<Edge> edges = ryf.getEdges();
@@ -99,7 +102,7 @@ public class CodeWriter {
                     }
                 }
                 String finalNextTarget = nextTarget;
-                //System.out.println(nextTarget);
+
                 if (stuff) {
 
                     temp = nodes.stream().filter(y -> y.getNodeID().equals(finalNextTarget)).findFirst().get();
@@ -113,7 +116,15 @@ public class CodeWriter {
 
                     stuff = false;
                 } else if (edgeStack.size() > 1) {
-                    nextTarget = nodes.stream().filter(x2 -> x2.getNodeID().equals(edgeStack.peek().getTargetID())).findFirst().get().getNodeID();
+                    //nextTarget = nodes.stream().filter(x2 -> x2.getNodeID().equals(edgeStack.peek().getTargetID())).findFirst().get().getNodeID();
+
+                    for(Node n : nodes){
+                        if(n.getNodeID().equals(edgeStack.peek().getTargetID())){
+                            nextTarget = n.getNodeID();
+                            edgeStack.pop();
+                            break;
+                        }
+                    }
                     edgeStack.pop();
                     warum = true;
                 }
