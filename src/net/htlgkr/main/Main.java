@@ -3,13 +3,12 @@ package net.htlgkr.main;
 import net.htlgkr.handler.Edge;
 import net.htlgkr.handler.Node;
 import net.htlgkr.handler.Point;
+import sun.plugin.dom.core.CoreConstants;
 
 public class Main {
 
     public static void main(String[] args) {
         ReadyEdFile readFile = new ReadyEdFile("ElectionUtilBasic.graphml");
-
-
         CodeWriter.writeToJava(readFile);
         testing(readFile);
     }
