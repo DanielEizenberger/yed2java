@@ -1,6 +1,5 @@
 package net.htlgkr.main;
 
-import com.sun.org.apache.bcel.internal.classfile.Code;
 import net.htlgkr.handler.Edge;
 import net.htlgkr.handler.Node;
 
@@ -53,6 +52,8 @@ public class CodeWriter {
     }*/
 
     public static void writeToJava(ReadyEdFile ryf){
+        System.out.println("DEBUG: Start writeToJava()");
+
         Set<Node> nodes = ryf.getNodes();
         Set<Edge> edges = ryf.getEdges();
         String yedName = ryf.getPath();
@@ -65,11 +66,12 @@ public class CodeWriter {
             BufferedWriter bw = new BufferedWriter(new FileWriter(f));
             bw.write("import java.util.HashMap;\n" +
                     "import java.util.Map;\n");
-            bw.write("public final class " + yedName + " {");
-            bw.newLine();
+            bw.write("public final class " + yedName + " {\n");
 
+            for (Node n : nodes){
+                if(n.getNodeID().equals("n0"))  bw.write(n.getNodeLabel() + "{\n");
+            }
 
-            System.out.println("DEBUG: Start fuerFortnite()");
             Node temp = nodes.stream().filter(x -> x.getNodeID().equals("n1")).findFirst().get();
             Stack<Node> nodeStack = new Stack<>();
             Stack<Edge> edgeStack = new Stack<>();
@@ -133,7 +135,7 @@ public class CodeWriter {
                 System.out.println(n.getNodeLabel());
                 bw.write(n.getNodeLabel());
                 if(n.getNodeLabel().toLowerCase().contains("if")||n.getNodeLabel().toLowerCase().contains("for")){
-                    bw.write("{");
+                   // bw.write("{");
                 }
                 for (Edge e : edges ) {
                     if(e.getSourceID().equals(n.getNodeID())){
@@ -153,6 +155,6 @@ public class CodeWriter {
             exc.printStackTrace();
         }
 
-        System.out.println("DEBUG: End fuerFortnite()");
+        System.out.println("DEBUG: End writeToJava()");
     }
 }
