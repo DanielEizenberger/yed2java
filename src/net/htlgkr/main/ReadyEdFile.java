@@ -11,9 +11,7 @@ import javax.xml.parsers.SAXParserFactory;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Comparator;
 import java.util.Set;
-import java.util.TreeSet;
 
 public class ReadyEdFile {
 
