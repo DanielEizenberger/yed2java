@@ -147,8 +147,7 @@ public class CodeWriter {
                 }
                 bw.newLine();
             }
-            bw.write("}");
-            bw.write("}");
+            bw.write("}\n}");
             bw.flush();
             bw.close();
         }catch (Exception exc){

@@ -24,4 +24,5 @@ result = "draw";
 break;
 }
 return result;
-}}
+}
+}
